@@ -41,7 +41,7 @@ Shader "UnityShader/Chapter 7/NormalMapTangentSpace"
 			struct a2f
 			{
 				float4 vertex : POSITION;
-				float4 normal : NORMAL;
+				float3 normal : NORMAL;
 				float4 tangent :TANGENT;
 				float2 texcoord : TEXCOORD0;
 			};
@@ -64,8 +64,8 @@ Shader "UnityShader/Chapter 7/NormalMapTangentSpace"
 
 				TANGENT_SPACE_ROTATION;
 
-				o.lightDir = mul(rotation, ObjSpaceLightDir(v.vertex));
-				o.viewDir = mul(rotation, ObjSpaceViewDir(v.vertex));
+				o.lightDir = mul(rotation, normalize(ObjSpaceLightDir(v.vertex))).xyz;
+				o.viewDir = mul(rotation, normalize(ObjSpaceViewDir(v.vertex))).xyz;
 				return o;
 			}
 			
@@ -81,10 +81,9 @@ Shader "UnityShader/Chapter 7/NormalMapTangentSpace"
 				fixed3 albedo = tex2D(_MainTex, i.uv).rgb * _Color.rgb;
 				fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz * albedo;
 
-				fixed3 diffuse = _LightColor0.rgb * albedo * max(0, dot(worldNormal, worldLightDir));
-				fixed3 viewDir = normalize(UnityWorldSpaceViewDir(i.worldPos));
-				fixed3 halfDir = normalize(worldLightDir + viewDir);
-				fixed3 specular = _LightColor0.rgb * _Specular.rgb * pow(max(0, dot(worldNormal, halfDir)), _Gloss);
+				fixed3 diffuse = _LightColor0.rgb * albedo * max(0, dot(tangentNormal, tangentLightDir));
+				fixed3 halfDir = normalize(tangentLightDir + tangentViewDir);
+				fixed3 specular = _LightColor0.rgb * _Specular.rgb * pow(max(0, dot(tangentNormal, halfDir)), _Gloss);
 
 				return fixed4(ambient+diffuse+specular, 1);
 			}
