@@ -24,20 +24,20 @@ Shader "Unity Shaders Book/Chapter 8/Blend Operations 1" {
 			Blend DstColor Zero
 //			
 //			// 2x Multiply
-//			Blend DstColor SrcColor
+			Blend DstColor SrcColor
 //			
 //			// Darken
 //			BlendOp Min
-//			Blend One One	// When using Min operation, these factors are ignored
+			Blend One One	// When using Min operation, these factors are ignored
 //			
 //			//  Lighten
 //			BlendOp Max
-//			Blend One One // When using Max operation, these factors are ignored
+			Blend One One // When using Max operation, these factors are ignored
 //			
 //			// Screen
-//			Blend OneMinusDstColor One
+			Blend OneMinusDstColor One
 			// Or
-//			Blend One OneMinusSrcColor
+			Blend One OneMinusSrcColor
 //			
 //			// Linear Dodge
 			Blend One One
