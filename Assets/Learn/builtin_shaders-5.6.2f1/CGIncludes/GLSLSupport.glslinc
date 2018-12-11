@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'glstate_matrix_projection' with 'UNITY_MATRIX_P'
+
 // Unity built-in shader source. Copyright (c) 2016 Unity Technologies. MIT license (see license.txt)
 
 #ifndef GLSL_SUPPORT_INCLUDED
@@ -11,14 +13,14 @@ uniform mat4 unity_WorldToObject;
 uniform mat4 unity_MatrixVP;
 uniform mat4 unity_MatrixV;
 uniform mat4 unity_MatrixInvV;
-uniform mat4 glstate_matrix_projection;
+uniform mat4 UNITY_MATRIX_P;
 
 #define gl_ModelViewProjectionMatrix        (unity_MatrixVP * unity_ObjectToWorld)
 #define gl_ModelViewMatrix                  (unity_MatrixV * unity_ObjectToWorld)
 #define gl_ModelViewMatrixTranspose         (transpose(unity_MatrixV * unity_ObjectToWorld))
 #define gl_ModelViewMatrixInverseTranspose  (transpose(unity_WorldToObject * unity_MatrixInvV))
 #define gl_NormalMatrix                     (transpose(mat3(unity_WorldToObject * unity_MatrixInvV)))
-#define gl_ProjectionMatrix                 glstate_matrix_projection
+#define gl_ProjectionMatrix                 UNITY_MATRIX_P
 
 #if __VERSION__ < 120
 mat3 transpose(mat3 mtx)
